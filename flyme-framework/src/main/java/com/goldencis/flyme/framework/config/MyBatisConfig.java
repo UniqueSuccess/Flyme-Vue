@@ -89,7 +89,7 @@ public class MyBatisConfig
         return typeAliasesPackage;
     }
 
-    @Bean
+    /*@Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception
     {
         String typeAliasesPackage = env.getProperty("mybatis.typeAliasesPackage");
@@ -104,5 +104,5 @@ public class MyBatisConfig
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
         sessionFactory.setConfigLocation(new DefaultResourceLoader().getResource(configLocation));
         return sessionFactory.getObject();
-    }
+    }*/
 }

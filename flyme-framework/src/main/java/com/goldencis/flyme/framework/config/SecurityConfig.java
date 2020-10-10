@@ -97,7 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/captchaImage","/common/mq/test1","/system/config/test1").anonymous()
+                .antMatchers("/login", "/captchaImage","/common/mq/test2","/common/mq/test3","/common/mq/test1","/system/config/test1").anonymous()
                 .antMatchers(
                         HttpMethod.GET,
                         "/*.html",
