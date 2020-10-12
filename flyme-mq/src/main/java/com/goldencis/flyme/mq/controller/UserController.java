@@ -2,6 +2,8 @@ package com.goldencis.flyme.mq.controller;
 
 
 import com.goldencis.flyme.common.core.domain.AjaxResult;
+import com.goldencis.flyme.common.domain.Message;
+import com.goldencis.flyme.common.mq.RedisSubPub;
 import com.goldencis.flyme.common.utils.StringUtils;
 import com.goldencis.flyme.mq.domain.User;
 import com.goldencis.flyme.mq.service.IUserService;
@@ -31,6 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
+    private RedisSubPub redisSubPub;
+
+    @Autowired
     private IUserService userService;
 
     @PreAuthorize("@ss.hasPermi('monitor:online:list')")
@@ -58,6 +63,18 @@ public class UserController {
     {
         User user = userService.getById(userId);
         return AjaxResult.success(user);
+    }
+
+    @PreAuthorize("@ss.hasPermi('monitor:online:list')")
+    @ApiOperation("测试redis发送")
+    @GetMapping("/test_redis")
+    public AjaxResult TestRedis(String messages)
+    {
+        Message message = Message.builder().build();
+        message.setChannel("zhangsan");
+        message.setContent(messages);
+        redisSubPub.doPublish(message);
+        return AjaxResult.success(null);
     }
 
 }
