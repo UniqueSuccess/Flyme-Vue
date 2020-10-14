@@ -11,6 +11,10 @@
 
     <artifactId>flyme-mq</artifactId>
 
+    <description>
+        本模块里面的方法都是演示和测试，方便大家进行学习
+    </description>
+
     <dependencies>
 
 
