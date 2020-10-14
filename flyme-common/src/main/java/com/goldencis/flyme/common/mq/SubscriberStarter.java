@@ -62,6 +62,7 @@ public class SubscriberStarter implements SmartLifecycle, ApplicationContextAwar
                             .method(method)
                             .build();
                     for (String channel : channels) {
+                        //各个注解频道不能重复
                         if (messageSubscribeMapping.containsKey(channel)) {
                             throw new RuntimeException(String.format("Detected 2 or more methods[%s,%s] attached to the same channel[%s],please check it first.", messageHandlerMethod
                                     .getMethod(), messageSubscribeMapping.get(channel).getMethod(), channel));
