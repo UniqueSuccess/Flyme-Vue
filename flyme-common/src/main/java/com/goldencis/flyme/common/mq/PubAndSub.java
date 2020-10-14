@@ -1,9 +1,10 @@
 package com.goldencis.flyme.common.mq;
 
 import com.goldencis.flyme.common.domain.Message;
-import org.springframework.data.redis.connection.MessageListener;
+import com.goldencis.flyme.common.domain.MessageHandlerMethod;
 
 import java.io.Closeable;
+import java.util.Map;
 
 /**
  * @program: Flyme-Vue
@@ -23,5 +24,5 @@ public interface PubAndSub extends Closeable {
      * 订阅
      * @param listener
      */
-    void doSubscribe(MessageListener listener);
+    void doSubscribe(Map<String, MessageHandlerMethod> subscribeMapping, String... channels);
 }
