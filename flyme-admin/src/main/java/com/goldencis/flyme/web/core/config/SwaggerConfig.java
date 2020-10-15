@@ -9,12 +9,15 @@ import org.springframework.context.annotation.Configuration;
 import com.goldencis.flyme.common.config.RuoYiConfig;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -48,6 +51,16 @@ public class SwaggerConfig
     @Bean
     public Docket createRestApi()
     {
+        //增加默认jwt 不用每次进入都输入  默认得过期了再改
+        ParameterBuilder authParam = new ParameterBuilder();
+        List<Parameter> paramList = new ArrayList<>();
+        authParam.name("Authorization")
+                .description("令牌")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .defaultValue("Bearer eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6Ijc3NWQ5ZWE2LTJmNjgtNGVjMS04MGNjLWQ3NTFkMzg4MzFmNSJ9.COFVUGsPNCkW7_uvk1MrkYwjZdlYtDm_9IIzbzqrG7-g47y0QqpgnruvwXFLz9ZcfgPtTNqZndOnTG4AmIhvUw")
+                .required(false);
+        paramList.add(authParam.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 // 是否启用Swagger
                 .enable(enabled)
@@ -64,8 +77,8 @@ public class SwaggerConfig
                 .build()
                 /* 设置安全模式，swagger可以设置访问token */
                 .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts())
-                .pathMapping(pathMapping);
+                .securityContexts(securityContexts()).pathMapping(pathMapping).globalOperationParameters(paramList);
+
     }
 
     /**
@@ -75,6 +88,7 @@ public class SwaggerConfig
     {
         List<ApiKey> apiKeyList = new ArrayList<ApiKey>();
         apiKeyList.add(new ApiKey("Authorization", "Authorization", "header"));
+        //        apiKeyList.add(new ApiKey("Authorization", "Authorization1", "header"));
         return apiKeyList;
     }
 
