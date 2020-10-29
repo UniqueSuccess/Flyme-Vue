@@ -29,6 +29,22 @@ public class RuoYiConfig
 
     /** 获取地址开关 */
     private static boolean addressEnabled;
+    /** 无需鉴权就能访问的地址 */
+    private String ignore;
+
+
+    public String[] getIgnoreList() {
+        String[] ignoreList = ignore.split(",");
+        return ignoreList;
+    }
+
+    public String getIgnore() {
+        return ignore;
+    }
+
+    public void setIgnore(String ignore) {
+        this.ignore = ignore;
+    }
 
     public String getName()
     {

@@ -1,5 +1,6 @@
 package com.goldencis.flyme.framework.config;
 
+import com.goldencis.flyme.common.config.RuoYiConfig;
 import com.goldencis.flyme.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.goldencis.flyme.framework.security.handle.AuthenticationEntryPointImpl;
 import com.goldencis.flyme.framework.security.handle.LogoutSuccessHandlerImpl;
@@ -26,6 +27,8 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
+    @Autowired
+    private RuoYiConfig ruoYiConfig;
     /**
      * 自定义用户认证逻辑
      */
@@ -97,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/captchaImage","/common/mq/test2","/common/mq/test3","/common/mq/test1","/system/config/test1").anonymous()
+                .antMatchers(ruoYiConfig.getIgnoreList()).anonymous()
                 .antMatchers(
                         HttpMethod.GET,
                         "/*.html",

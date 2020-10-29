@@ -14,6 +14,8 @@ flyme:
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: math
+  # 忽略不需要鉴权的地址
+  ignore: /login,/captchaImage,/common/mq/test2,/common/mq/test3
 
 # 开发环境配置
 server:
@@ -59,9 +61,9 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 10.10.16.116
+    host: 10.10.15.100
     # 端口，默认为6379
-    port: 6379
+    port: 38019
     # 密码
     password:
     # 连接超时时间
@@ -84,7 +86,7 @@ token:
     # 令牌密钥
     secret: abcdefghijklmnopqrstuvwxyz
     # 令牌有效期（默认30分钟）
-    expireTime: 30
+    expireTime: 600
 #mybatis-plus:
 #  type-aliases-package: com.goldencis.flyme.**.domain
 #  mapper-locations: classpath:mapper/*/*Mapper.xml
